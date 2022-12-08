@@ -14,15 +14,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import jp.co.yumemi.android.code_check.databinding.FragmentOneBinding
 
-class OneFragment: Fragment(R.layout.fragment_one){
+class RepositoryListFragment: Fragment(R.layout.fragment_repository_list){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
 
-        val _binding= FragmentOneBinding.bind(view)
+        val _binding= FragmentRepositoryListBinding.bind(view)
 
-        val _viewModel= OneViewModel(context!!)
+        val _viewModel= RepositoryListViewModel(context!!)
 
         val _layoutManager= LinearLayoutManager(context!!)
         val _dividerItemDecoration=
