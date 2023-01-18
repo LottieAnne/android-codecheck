@@ -13,14 +13,8 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.util.*
@@ -31,7 +25,7 @@ import java.util.*
 class RepositoryListViewModel : ViewModel() {
     private val _searchTextFlow = MutableStateFlow("")
 
-    private val = _repositoryList = MutableStateFlow<List<RepositoryInfo>>(emptyList())
+    private val _repositoryList = MutableStateFlow<List<RepositoryInfo>>(emptyList())
 
     val uiState = combine(_repositoryList, _searchTextFlow) { repositoryList, searchText ->
         RepositoryListUiState(
@@ -43,7 +37,8 @@ class RepositoryListViewModel : ViewModel() {
         started = SharingStarted.WhileSubscribed(),
         initialValue = RepositoryListUiState.InitialValue,
     )
-}
+
+
     // 検索結果
     fun searchResults(inputText: String, context: Context) {
         val client = HttpClient(Android)
@@ -89,9 +84,11 @@ class RepositoryListViewModel : ViewModel() {
             lastSearchDate = Date()
 
             _repositoryList.value = items
-
-            _uiState.update { it.copy(repositoryList = items) }
         }
+    }
+
+    fun onValueChange(value: String) {
+        _searchTextFlow.value = value
     }
 }
 
@@ -109,13 +106,11 @@ data class RepositoryInfo(
 data class RepositoryListUiState(
     val repositoryList: List<RepositoryInfo>,
     val searchText: String,
-    val isLoading: Boolean,
-){
-    companion object{
+) {
+    companion object {
         val InitialValue = RepositoryListUiState(
             repositoryList = emptyList(),
-            searchText = "",
-            isLoading = false,
+            searchText = ""
         )
     }
 }

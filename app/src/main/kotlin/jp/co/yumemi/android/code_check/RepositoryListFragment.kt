@@ -22,6 +22,7 @@ import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryListBinding
 import kotlinx.coroutines.flow.collect
 
 class RepositoryListFragment: Fragment() {
+    private val viewModel by viewModels<RepositoryListViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,5 +31,10 @@ class RepositoryListFragment: Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
+                RepositoryListRoute(
+                    viewModel = viewModel
+                )
             }
         }
+    }
+}
