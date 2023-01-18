@@ -7,22 +7,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.core.content.ContentProviderCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.*
-import jp.co.yumemi.android.code_check.databinding.FragmentRepositoryListBinding
-import kotlinx.coroutines.flow.collect
+import jp.co.yumemi.android.code_check.repositoryList.RepositoryListRoute
 
-class RepositoryListFragment: Fragment() {
+class RepositoryListFragment : Fragment() {
     private val viewModel by viewModels<RepositoryListViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +26,14 @@ class RepositoryListFragment: Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 RepositoryListRoute(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onClick = {
+                        val action =
+                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(
+                                it
+                            )
+                        findNavController().navigate(action)
+                    },
                 )
             }
         }
