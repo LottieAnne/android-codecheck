@@ -4,35 +4,29 @@
 package jp.co.yumemi.android.code_check
 
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.compose.material3.Text
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import coil.load
-import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
 
-class RepositoryDetailFragment : Fragment(R.layout.fragment_repository_detail) {
+class RepositoryDetailFragment : Fragment() {
 
-//    private val args: TwoFragmentArgs by navArgs()
-//
-//    private var binding: FragmentTwoBinding? = null
-//    private val _binding get() = binding!!
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        Log.d("検索した日時", lastSearchDate.toString())
-//
-//        binding = FragmentTwoBinding.bind(view)
-//
-//        var item = args.item
-//
-//        _binding.ownerIconView.load(item.ownerIconUrl);
-//        _binding.nameView.text = item.name;
-//        _binding.languageView.text = item.language;
-//        _binding.starsView.text = "${item.stargazersCount} stars";
-//        _binding.watchersView.text = "${item.watchersCount} watchers";
-//        _binding.forksView.text = "${item.forksCount} forks";
-//        _binding.openIssuesView.text = "${item.openIssuesCount} open issues";
-//    }
+    private val args: RepositoryDetailFragmentArgs by navArgs()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                Text(text = args.repositoryInfo.name)
+            }
+        }
+    }
 }
