@@ -29,7 +29,7 @@ class RepositoryListFragment : Fragment() {
                     viewModel = viewModel,
                     onClick = {
                         val action =
-                            RepositoryListFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(
+                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(
                                 it
                             )
                         findNavController().navigate(action)
@@ -39,3 +39,4 @@ class RepositoryListFragment : Fragment() {
         }
     }
 }
+
