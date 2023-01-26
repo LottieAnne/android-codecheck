@@ -16,6 +16,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.RepositoryInfo
 
@@ -23,14 +26,12 @@ import jp.co.yumemi.android.code_check.RepositoryInfo
 fun RepositoryDetailRoute(repositoryInfo: RepositoryInfo) {
     RepositoryDetailScreen(
         repositoryInfo,
-        imagePainter = painterResource(R.drawable.eevee)
     )
 }
 
 @Composable
 private fun RepositoryDetailScreen(
     repositoryInfo: RepositoryInfo,
-    imagePainter: Painter,
 ) {
     Column(
         modifier = Modifier
@@ -41,11 +42,23 @@ private fun RepositoryDetailScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = imagePainter,
+        SubcomposeAsyncImage(
+            model = repositoryInfo.ownerIconUrl,
             contentDescription = null,
-            modifier = Modifier.padding(32.dp),
-        )
+
+//            painter = painterResource(R.drawable.eevee),
+//            contentDescription = null,
+//            modifier = Modifier.padding(32.dp),
+        ) {
+            when (painter.state) {
+                AsyncImagePainter.State.Empty,
+                is AsyncImagePainter.State.Error,
+                is AsyncImagePainter.State.Loading -> Unit
+                is AsyncImagePainter.State.Success -> {
+                    SubcomposeAsyncImageContent()
+                }
+            }
+        }
         Text(
             text = repositoryInfo.name,
             fontSize = 32.sp,
@@ -79,6 +92,5 @@ fun RepositoryDetailScreenPreview() {
             forksCount = 6,
             openIssuesCount = 8,
         ),
-        imagePainter = painterResource(R.drawable.eevee)
     )
 }
