@@ -5,7 +5,6 @@ package jp.co.yumemi.android.code_check
 
 import android.content.Context
 import android.os.Parcelable
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
@@ -13,19 +12,20 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import jp.co.yumemi.android.code_check.TopActivity.Companion.lastSearchDate
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
-import java.util.*
 
 /**
  * RepositoryDetailFragment で使う
  */
 class RepositoryListViewModel : ViewModel() {
-    private val _searchTextFlow = MutableStateFlow("")
 
+    private val _searchTextFlow = MutableStateFlow("")
     private val _repositoryList = MutableStateFlow<List<RepositoryInfo>>(emptyList())
 
     val uiState = combine(_repositoryList, _searchTextFlow) { repositoryList, searchText ->
@@ -81,8 +81,6 @@ class RepositoryListViewModel : ViewModel() {
                     )
                 )
             }
-
-            lastSearchDate = Date()
 
             _repositoryList.value = items
         }
