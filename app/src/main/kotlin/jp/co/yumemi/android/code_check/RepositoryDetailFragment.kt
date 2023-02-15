@@ -11,8 +11,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.repositoryDetail.RepositoryDetailRoute
-
+@AndroidEntryPoint
 class RepositoryDetailFragment : Fragment() {
 
     private val args: RepositoryDetailFragmentArgs by navArgs()

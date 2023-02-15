@@ -11,9 +11,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.repositoryList.RepositoryListRoute
-
+@AndroidEntryPoint
 class RepositoryListFragment : Fragment() {
 
     private val viewModel by viewModels<RepositoryListViewModel>()
@@ -29,9 +29,9 @@ class RepositoryListFragment : Fragment() {
                 RepositoryListRoute(
                     viewModel = viewModel,
                     onRepositoryClick = {
-                        val action =
-                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(it)
-                        findNavController().navigate(action)
+//                        val action =
+//                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(it)
+//                        findNavController().navigate(action)
                     },
                 )
             }
