@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import jp.co.yumemi.android.code_check.repositoryList.RepositoryListRoute
 
 class RepositoryListFragment : Fragment() {
+
     private val viewModel by viewModels<RepositoryListViewModel>()
 
     override fun onCreateView(
@@ -27,11 +28,9 @@ class RepositoryListFragment : Fragment() {
             setContent {
                 RepositoryListRoute(
                     viewModel = viewModel,
-                    onClick = {
+                    onRepositoryClick = {
                         val action =
-                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(
-                                it
-                            )
+                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(it)
                         findNavController().navigate(action)
                     },
                 )

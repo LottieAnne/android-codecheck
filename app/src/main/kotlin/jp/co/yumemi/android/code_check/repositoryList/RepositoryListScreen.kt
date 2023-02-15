@@ -8,7 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,28 +27,28 @@ import jp.co.yumemi.android.code_check.RepositoryListViewModel
 @Composable
 fun RepositoryListRoute(
     viewModel: RepositoryListViewModel,
-    onClick: (RepositoryInfo) -> Unit,
+    onRepositoryClick: (RepositoryInfo) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
     RepositoryListScreen(
-        repositoryListUiState = uiState,
-        onValueChange = viewModel::onValueChange,
+        uiState = uiState,
+        onSearchValueChange = viewModel::onValueChange,
         onSearch = {
             viewModel.searchResults(it, context)
         },
-        onClick = onClick,
+        onRepositoryClick = onRepositoryClick,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun RepositoryListScreen(
-    repositoryListUiState: RepositoryListUiState,
-    onValueChange: (String) -> Unit,
+    uiState: RepositoryListUiState,
+    onSearchValueChange: (String) -> Unit,
     onSearch: (String) -> Unit,
-    onClick: (RepositoryInfo) -> Unit,
+    onRepositoryClick: (RepositoryInfo) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -55,24 +59,24 @@ private fun RepositoryListScreen(
         },
     ) {
         Column(
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(it),
         ) {
             TextField(
-                value = repositoryListUiState.searchText,
-                onValueChange = onValueChange,
+                value = uiState.searchText,
+                onValueChange = onSearchValueChange,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
-                    onSearch = { onSearch(repositoryListUiState.searchText) },
+                    onSearch = { onSearch(uiState.searchText) },
                 )
             )
             LazyColumn {
                 items(
-                    items = repositoryListUiState.repositoryList,
+                    items = uiState.repositoryList,
                 ) { repository ->
                     Text(
                         text = repository.name,
                         modifier = Modifier.clickable {
-                            onClick(
+                            onRepositoryClick(
                                 repository
                             )
                         }
@@ -85,11 +89,11 @@ private fun RepositoryListScreen(
 
 @Preview
 @Composable
-fun RepositoryListScreenPreview() {
+private fun RepositoryListScreenPreview() {
     RepositoryListScreen(
-        repositoryListUiState = RepositoryListUiState.InitialValue,
-        onValueChange = {},
+        uiState = RepositoryListUiState.InitialValue,
+        onSearchValueChange = {},
         onSearch = {},
-        onClick = {},
+        onRepositoryClick = {},
     )
 }
