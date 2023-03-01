@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import jp.co.yumemi.android.code_check.RepositoryInfo
@@ -30,14 +29,11 @@ fun RepositoryListRoute(
     onRepositoryClick: (RepositoryInfo) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current
 
     RepositoryListScreen(
         uiState = uiState,
         onSearchValueChange = viewModel::onValueChange,
-        onSearch = {
-            viewModel.searchResults(it, context)
-        },
+        onSearch = viewModel::searchResults,
         onRepositoryClick = onRepositoryClick,
     )
 }
