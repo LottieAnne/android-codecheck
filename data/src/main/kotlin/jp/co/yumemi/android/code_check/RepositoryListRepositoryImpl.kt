@@ -1,22 +1,32 @@
-package jp.co.yumemi.android.code_check.data
+package jp.co.yumemi.android.code_check
 
 import android.content.Context
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
-import jp.co.yumemi.android.code_check.R
-import jp.co.yumemi.android.code_check.RepositoryInfo
+import jp.co.yumemi.android.code_check.domain.RepositoryInfo
+import jp.co.yumemi.android.code_check.domain.RepositoryListRepository
+import jp.co.yumemi.android.codecheck.data.R
 import org.json.JSONObject
 import javax.inject.Inject
 
-
-class RepositoryListRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
-){
-    suspend fun searchResults(inputText: String): List<RepositoryInfo> {
+@Module
+@InstallIn(SingletonComponent::class)
+interface RepositoryListRepositoryModule {
+    @Binds
+    fun bindRepositoryListRepository(impl: RepositoryListRepositoryImpl) : RepositoryListRepository
+}
+class RepositoryListRepositoryImpl @Inject constructor(
+    @ApplicationContext val context: Context,
+) : RepositoryListRepository {
+    override suspend fun searchResults(inputText: String): List<RepositoryInfo> {
         val client = HttpClient(Android)
 
             val response: HttpResponse = client.get("https://api.github.com/search/repositories") {

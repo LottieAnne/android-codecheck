@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import jp.co.yumemi.android.code_check.RepositoryInfo
+import jp.co.yumemi.android.code_check.domain.RepositoryInfo
 
 @Composable
-fun RepositoryDetailRoute(repositoryInfo: RepositoryInfo) {
+fun RepositoryDetailRoute(repositoryInfo: jp.co.yumemi.android.code_check.domain.RepositoryInfo) {
     RepositoryDetailScreen(
         repositoryInfo,
     )
@@ -27,7 +27,7 @@ fun RepositoryDetailRoute(repositoryInfo: RepositoryInfo) {
 
 @Composable
 private fun RepositoryDetailScreen(
-    repositoryInfo: RepositoryInfo,
+    repositoryInfo: jp.co.yumemi.android.code_check.domain.RepositoryInfo,
 ) {
     Column(
         modifier = Modifier
@@ -77,7 +77,7 @@ private fun RepositoryDetailScreen(
 @Composable
 private fun RepositoryDetailScreenPreview() {
     RepositoryDetailScreen(
-        repositoryInfo = RepositoryInfo(
+        repositoryInfo = jp.co.yumemi.android.code_check.domain.RepositoryInfo(
             name = "name",
             ownerIconUrl = "ownerIconUrl",
             language = "language",
