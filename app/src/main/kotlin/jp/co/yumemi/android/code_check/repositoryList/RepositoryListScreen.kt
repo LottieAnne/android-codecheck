@@ -24,7 +24,7 @@ import jp.co.yumemi.android.code_check.domain.RepositoryInfo
 @Composable
 fun RepositoryListRoute(
     viewModel: RepositoryListViewModel,
-    onRepositoryClick: (jp.co.yumemi.android.code_check.domain.RepositoryInfo) -> Unit,
+    onRepositoryClick: (RepositoryInfo) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -42,7 +42,7 @@ private fun RepositoryListScreen(
     uiState: RepositoryListUiState,
     onSearchValueChange: (String) -> Unit,
     onSearch: (String) -> Unit,
-    onRepositoryClick: (jp.co.yumemi.android.code_check.domain.RepositoryInfo) -> Unit,
+    onRepositoryClick: (RepositoryInfo) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
