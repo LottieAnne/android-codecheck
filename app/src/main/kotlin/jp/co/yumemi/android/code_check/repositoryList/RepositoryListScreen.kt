@@ -19,9 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import jp.co.yumemi.android.code_check.RepositoryInfo
-import jp.co.yumemi.android.code_check.RepositoryListUiState
-import jp.co.yumemi.android.code_check.RepositoryListViewModel
+import jp.co.yumemi.android.code_check.domain.RepositoryInfo
 
 @Composable
 fun RepositoryListRoute(

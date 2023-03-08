@@ -1,19 +1,18 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.repositoryList
 
-import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.co.yumemi.android.code_check.data.RepositoryListRepository
+import jp.co.yumemi.android.code_check.domain.RepositoryInfo
+import jp.co.yumemi.android.code_check.domain.RepositoryListRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parcelize
 import javax.inject.Inject
 
 /**
@@ -51,19 +50,9 @@ class RepositoryListViewModel @Inject constructor(
     }
 }
 
-@Parcelize
-data class RepositoryInfo(
-    val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
-) : Parcelable
 
 data class RepositoryListUiState(
-    val repositoryList: List<RepositoryInfo>,
+    val repositoryList: List<jp.co.yumemi.android.code_check.domain.RepositoryInfo>,
     val searchText: String,
 ) {
     companion object {

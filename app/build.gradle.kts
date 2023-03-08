@@ -6,6 +6,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
+    kotlin("plugin.serialization") version "1.8.10"
 }
 
 android {
@@ -38,11 +39,13 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
 }
 
 dependencies {
+    implementation(project(":data"))
+    implementation(project(":domain"))
     val composeBom = platform("androidx.compose:compose-bom:2022.10.00")
     implementation(composeBom)
     androidTestImplementation(composeBom)
@@ -78,8 +81,10 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    kapt("com.google.dagger:hilt-compiler:2.44")
 //    implementation("androidx.navigation:navigation-compose:2.5.3")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 }
 
 // Allow references to generated code

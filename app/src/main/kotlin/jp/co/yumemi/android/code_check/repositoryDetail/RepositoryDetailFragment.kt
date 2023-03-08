@@ -1,7 +1,7 @@
 /*
  * Copyright © 2021 YUMEMI Inc. All rights reserved.
  */
-package jp.co.yumemi.android.code_check
+package jp.co.yumemi.android.code_check.repositoryDetail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,13 +10,13 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
-import jp.co.yumemi.android.code_check.repositoryList.RepositoryListRoute
-@AndroidEntryPoint
-class RepositoryListFragment : Fragment() {
 
-    private val viewModel by viewModels<RepositoryListViewModel>()
+@AndroidEntryPoint
+class RepositoryDetailFragment : Fragment() {
+
+    private val args: RepositoryDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,16 +26,8 @@ class RepositoryListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                RepositoryListRoute(
-                    viewModel = viewModel,
-                    onRepositoryClick = {
-//                        val action =
-//                            RepositoryListFragmentDirections.actionRepositoryListFragmentToRepositoryDetailFragment(it)
-//                        findNavController().navigate(action)
-                    },
-                )
+                RepositoryDetailRoute(args.arg.repositoryInfo)
             }
         }
     }
 }
-
