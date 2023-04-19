@@ -41,10 +41,6 @@ private fun RepositoryDetailScreen(
         SubcomposeAsyncImage(
             model = repositoryInfo.ownerIconUrl,
             contentDescription = null,
-
-//            painter = painterResource(R.drawable.eevee),
-//            contentDescription = null,
-//            modifier = Modifier.padding(32.dp),
         ) {
             when (painter.state) {
                 AsyncImagePainter.State.Empty,
