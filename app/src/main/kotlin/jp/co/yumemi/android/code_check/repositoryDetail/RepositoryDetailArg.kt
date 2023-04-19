@@ -32,35 +32,35 @@ internal object RepositoryInfoParceler : Parceler<RepositoryInfo> {
         val json = Json.encodeToString(RepositoryInfo.serializer(), this)
         parcel.writeString(json)
     }
+}
 
-    private val RepositoryDetailArg_NavTypeGenerated = object : NavType<RepositoryDetailArg>(isNullableAllowed = true) {
-        override val name: String get() = "RepositoryDetailArg"
+private val RepositoryDetailArg_NavTypeGenerated = object : NavType<RepositoryDetailArg>(isNullableAllowed = true) {
+    override val name: String get() = "RepositoryDetailArg"
 
-        override fun put(bundle: Bundle, key: String, value: RepositoryDetailArg) {
-            bundle.putParcelable(key, value)
-        }
-
-        override fun get(bundle: Bundle, key: String): RepositoryDetailArg? {
-            return bundle.getParcelable(key)
-        }
-
-        override fun parseValue(value: String): RepositoryDetailArg {
-            return Json.decodeFromString<RepositoryDetailArg>(RepositoryDetailArg.serializer(), value)
-        }
+    override fun put(bundle: Bundle, key: String, value: RepositoryDetailArg) {
+        bundle.putParcelable(key, value)
     }
 
-    fun RepositoryDetailArg.asNavigationPath(): String {
-        return Uri.encode(Json.encodeToString(RepositoryDetailArg.serializer(), this))
+    override fun get(bundle: Bundle, key: String): RepositoryDetailArg? {
+        return bundle.getParcelable(key)
     }
 
-    @Suppress("unused")
-    val KClass<RepositoryDetailArg>.routePlaceholder: String
-        inline get() = "{RepositoryDetailArg}"
+    override fun parseValue(value: String): RepositoryDetailArg {
+        return Json.decodeFromString<RepositoryDetailArg>(RepositoryDetailArg.serializer(), value)
+    }
+}
 
-    fun RepositoryDetailArg(): NamedNavArgument {
-        return navArgument("RepositoryDetailArg") {
-            type = RepositoryInfoParceler.RepositoryDetailArg_NavTypeGenerated
-        }
+fun RepositoryDetailArg.asNavigationPath(): String {
+    return Uri.encode(Json.encodeToString(RepositoryDetailArg.serializer(), this))
+}
+
+@Suppress("unused")
+val KClass<RepositoryDetailArg>.routePlaceholder: String
+    inline get() = "{RepositoryDetailArg}"
+
+fun navRepositoryDetailArg(): NamedNavArgument {
+    return navArgument("RepositoryDetailArg") {
+        type = RepositoryDetailArg_NavTypeGenerated
     }
 }
 
